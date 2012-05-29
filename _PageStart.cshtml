@@ -1,0 +1,8 @@
+﻿@{
+  Layout = "~/Layouts/_Main.cshtml";
+  var targetPath = Server.MapPath("~/TargetFolder");
+  var dir = new DirectoryInfo(targetPath);
+  if (!dir.Exists) {
+    dir.Create();
+  }
+}

@@ -1,0 +1,27 @@
+﻿@{
+  //Web endpoint sample
+  Layout = null;
+  var path = Request["path"];
+  var name = Request["name"];
+  var type = Request["type"];
+  var targetPath = Server.MapPath("~/TargetFolder" + path + "\\" + name);
+  var dir = new DirectoryInfo(targetPath);
+  Response.AddHeader("Cache-Control", "no-cache");
+  try {
+    if (type == "folder") {
+      if (!dir.Exists) {
+        dir.Create();
+      } else {
+        //Force a 500 if directory already exists
+        throw new Exception();
+      }
+    } else if (type == "file") {
+      var file = new FileInfo(targetPath);
+      var stream = file.Create();
+      stream.Close();
+    }
+    Response.Write(Json.Encode(new FolderItem(name, type)));
+  } catch {
+    Response.SetStatus(500);
+  }
+}

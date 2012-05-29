@@ -1,0 +1,21 @@
+﻿@{
+  //Web endpoint sample
+  Layout = null;
+  var path = Request["path"];
+  var name = Request["name"];
+  var type = Request["type"];
+  var targetPath = Server.MapPath("~/TargetFolder" + path + "\\" + name);
+  var dir = new DirectoryInfo(targetPath);
+  Response.AddHeader("Cache-Control", "no-cache");
+  try {
+    if (type == "folder") {
+      //Default to recursive, possibly bad
+      dir.Delete(true);
+    } else if (type == "file") {
+      var file = new FileInfo(targetPath);
+      file.Delete();
+    }
+  } catch {
+    Response.SetStatus(500);
+  }
+}

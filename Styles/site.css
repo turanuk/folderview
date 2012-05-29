@@ -1,0 +1,120 @@
+/*Active Menu Item*/
+#Home .Home, #About .About {
+  color: #ffffff;
+}
+
+.buttons {
+  margin-bottom: 10px;
+}
+
+ol, ul {
+  list-style: none;
+}
+
+a {
+  outline: none;
+}
+
+.icon24 {
+  display: block;
+  width: 24px;
+  height: 24px;
+}
+
+.icon32 {
+  display: block;
+  width: 32px;
+  height: 32px;
+}
+
+.icon48 {
+  display: block;
+  width: 48px;
+  height: 48px;
+}
+
+.deleteIcon {
+  margin-left: 7px;
+  background: url(../img/delete.png);
+}
+
+.folderIcon {
+  background: url(../img/folder.png);
+}
+
+.folder, .file {
+  display: block;
+  font-size: 1.3em;
+  margin: 0 7px 0 9px;
+}
+
+.folder:hover {
+  text-decoration: none;
+  color: #0f731c;
+}
+
+.fileIcon {
+  background: url(../img/page.png);
+}
+
+.addIcon {
+  float: left;
+  text-align: center;
+  background: url(../img/plus.png);
+}
+
+.addIcon2 {
+  margin-left: 13px;
+}
+
+.addIcon:hover {
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.addIcon > span {
+  font-family: 'Segoe UI';
+  text-transform: uppercase;
+  color: Black;
+  display: block;
+  padding-top: 54px;
+}
+
+.upIcon {
+  background: url(../img/up_arrow.png);
+  margin-bottom: 7px;
+}
+
+.currentDir {
+  clear: both;
+  margin-top: 95px;
+  font-family: 'Segoe UI';
+  text-transform: lowercase;
+  font-size: 1.2em;
+}
+
+.treeview {
+  clear: both;
+  margin-top: 13px;
+}
+
+tr {
+  height: 59px;
+}
+
+.hidden {
+  display: none;
+  visibility: hidden;
+}
+
+.visible {
+  display: block;
+  visibility: visible;
+}
+
+.emptyDir {
+  font-family: 'Segoe UI';
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 1.2em;
+}

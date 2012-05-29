@@ -1,0 +1,19 @@
+﻿@{
+  //Web endpoint sample
+  Layout = null;
+  var path = Request["path"];
+  var items = new List<FolderItem>();
+  var dir = new DirectoryInfo(Server.MapPath("~/TargetFolder" + path));
+  var folders = dir.GetDirectories();
+  foreach (var folder in folders) {
+    var tempFolder = new FolderItem(folder.Name, "folder");
+    items.Add(tempFolder);
+  }
+  var files = dir.GetFiles();
+  foreach (var file in files) {
+    var tempFile = new FolderItem(file.Name, "file");
+    items.Add(tempFile);
+  }
+  Response.AddHeader("Cache-Control", "no-cache");
+  Response.Write(Json.Encode(items));
+}
