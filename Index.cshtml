@@ -20,7 +20,7 @@
 </div>
 
 <div class="currentDir">
-  <a href="#" class="upIcon icon32" data-bind="visible: $root.displaydirectory() != '\\', click: $root.upALevel"></a>
+  <a href="#" class="upIcon icon32" data-bind="css: {visible: $root.displaydirectory() != '\\'}, click: $root.upALevel"></a>
   <span>Current Directory: </span><span data-bind="text: $root.displaydirectory"></span>
   
 </div>

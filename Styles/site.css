@@ -83,6 +83,7 @@ a {
 .upIcon {
   background: url(../img/up_arrow.png);
   margin-bottom: 7px;
+  display: none;
 }
 
 .currentDir {
