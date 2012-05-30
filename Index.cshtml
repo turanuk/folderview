@@ -16,9 +16,9 @@
 
 <div class="buttons">
   <a href="#" class="homeIcon icon48" data-bind="click: $root.home"><span>Home</span></a>
-  <a href="#" class="refreshIcon icon48" data-bind="click: $root.refresh"><span>Refresh</span></a>
-  <a href="#" class="addIcon icon48" data-bind="inputPrompt: $root, type: 'file'"><span>File</span></a>
-  <a href="#" class="addIcon icon48 addIcon2" data-bind="inputPrompt: $root, type: 'folder'"><span>Folder</span></a>
+  <a href="#" class="refreshIcon icon48" data-bind="click: $root.refresh, visible: $root.keyword() ==''"><span>Refresh</span></a>
+  <a href="#" class="addIcon icon48" data-bind="inputPrompt: $root, type: 'file', visible: $root.keyword() ==''"><span>File</span></a>
+  <a href="#" class="addIcon icon48 addIcon2" data-bind="inputPrompt: $root, type: 'folder', visible: $root.keyword() ==''"><span>Folder</span></a>
   <a href="#" class="searchIcon icon48" data-bind="searchPrompt: $root"><span>Search</span></a>
 </div>
 
