@@ -5,7 +5,11 @@ ko.bindingHandlers.deletePrompt = {
   init: function (element, valueAccessor, allBindingsAccessor, model) {
     var viewModel = valueAccessor();
     $(element).click(function () {
-      $('.dialog-delete-element').html('<p>Are you sure you want to delete '  + model.ItemType + ' ' + model.ItemName + '?</p>');
+      if (model.ItemType === 'folder') {
+        $('.dialog-delete-element').html('<p>Are you sure you want to delete folder ' + model.ItemName + '? Any subfolders or files will also be deleted.</p>');
+      } else if (model.ItemType === 'file') {
+        $('.dialog-delete-element').html('<p>Are you sure you want to delete file ' + model.ItemName + '?</p>');
+      }
       $('.dialog-delete-element').dialog({
         height: 200,
         modal: true,
@@ -37,6 +41,31 @@ ko.bindingHandlers.inputPrompt = {
             var name = $('#' + type + 'InputName').val();
             if (name) {
               viewModel.addItem(name, type);
+              $(this).dialog('close');
+            }
+          },
+          'Cancel': function () {
+            $(this).dialog('close');
+          }
+        }
+      });
+    });
+  }
+}
+
+ko.bindingHandlers.searchPrompt = {
+  init: function (element, valueAccessor, allBindingsAccessor, model) {
+    var viewModel = valueAccessor();
+    $(element).click(function () {
+      $('#keywordInputName').val('');
+      $('.dialog-form-search').dialog({
+        height: 200,
+        modal: true,
+        buttons: {
+          'Search': function () {
+            var keyword = $('#keywordInputName').val();
+            if (keyword) {
+              viewModel.search(keyword);
               $(this).dialog('close');
             }
           },

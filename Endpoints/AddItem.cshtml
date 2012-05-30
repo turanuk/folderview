@@ -1,5 +1,4 @@
 ﻿@{
-  //Web endpoint sample
   Layout = null;
   var path = Request["path"];
   var name = Request["name"];
@@ -17,8 +16,13 @@
       }
     } else if (type == "file") {
       var file = new FileInfo(targetPath);
-      var stream = file.Create();
-      stream.Close();
+      if (!file.Exists) {
+        var stream = file.Create();
+        stream.Close();
+      } else {
+        //Force a 500 if file already exists
+        throw new Exception();
+      }
     }
     Response.Write(Json.Encode(new FolderItem(name, type)));
   } catch {

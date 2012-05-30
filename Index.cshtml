@@ -15,25 +15,34 @@
 </div>
 
 <div class="buttons">
+  <a href="#" class="homeIcon icon48" data-bind="click: $root.home"><span>Home</span></a>
+  <a href="#" class="refreshIcon icon48" data-bind="click: $root.refresh"><span>Refresh</span></a>
   <a href="#" class="addIcon icon48" data-bind="inputPrompt: $root, type: 'file'"><span>File</span></a>
   <a href="#" class="addIcon icon48 addIcon2" data-bind="inputPrompt: $root, type: 'folder'"><span>Folder</span></a>
+  <a href="#" class="searchIcon icon48" data-bind="searchPrompt: $root"><span>Search</span></a>
 </div>
 
-<div class="currentDir">
+<div class="currentDir" data-bind="css: {visible: $root.keyword() == ''}">
   <a href="#" class="upIcon icon32" data-bind="css: {visible: $root.displaydirectory() != '\\'}, click: $root.upALevel"></a>
   <span>Current Directory: </span><span data-bind="text: $root.displaydirectory"></span>
-  
+</div>
+
+<div class="searchResults" data-bind="css: {visible: $root.keyword() != ''}">
+  <a href="#" class="backIcon icon32" data-bind="click: $root.backToView"></a>
+  <span>Search Results for </span><span data-bind="text: $root.keyword()"></span>
 </div>
 
 <div class="treeview">
-  <div class="hidden emptyDir" data-bind="css: {visible: folders().length == 0 && files().length == 0 }">The directory is empty. Add a file or folder!</div>
+  <div class="hidden emptyDir" data-bind="css: {visible: folders().length == 0 && files().length == 0 && $root.keyword()=='' }">The directory is empty. Add a file or folder!</div>
+  <div class="hidden emptyDir" data-bind="css: {visible: folders().length == 0 && files().length == 0 && $root.keyword()!='' }">No search results. Try again!</div>
   <table class="hidden" data-bind="css: {visible: folders().length > 0 }">
     <tbody data-bind="foreach: folders">
       <tr>
         <td><span class="folderIcon icon48"></span></td>
-        <td><a href="#" class="folder" data-bind="text: ItemName, click: $root.navigate"></a>
+        <td><a href="#" class="folder" data-bind="text: ItemName, click: $root.navigate, visible: $root.keyword() ==''"></a>
+          <span class="folder" data-bind="text: ItemName, visible: $root.keyword() != ''"></span>
         </td>
-        <td><a href="#" class="deleteIcon icon24" data-bind="deletePrompt: $root"></a></td>
+        <td><a href="#" class="deleteIcon icon24" data-bind="deletePrompt: $root, visible: $root.keyword() ==''"></a></td>
       </tr>
     </tbody>
   </table>
@@ -43,7 +52,7 @@
         <td><span class="fileIcon icon48"></span></td>
         <td><span class="file" data-bind="text: ItemName"></span></a>
         </td>
-        <td><a href="#" class="deleteIcon icon24" data-bind="deletePrompt: $root"></a></td>
+        <td><a href="#" class="deleteIcon icon24" data-bind="deletePrompt: $root, visible: $root.keyword() ==''"></a></td>
       </tr>
     </tbody>
   </table>
@@ -61,4 +70,9 @@
 <div class="dialog-form-file" style="display: none" title="Add File">
   <label for="fileInputName">Name:</label>
   <input type="text" name="fileInputName" id="fileInputName"/>
+</div>
+
+<div class="dialog-form-search" style="display: none" title="Search All Folders">
+  <label for="keywordInputName">Keyword:</label>
+  <input type="text" name="keywordInputName" id="keywordInputName"/>
 </div>

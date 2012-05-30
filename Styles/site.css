@@ -11,7 +11,7 @@ ol, ul {
   list-style: none;
 }
 
-a {
+a, a:hover, a:focus {
   outline: none;
 }
 
@@ -48,7 +48,7 @@ a {
   margin: 0 7px 0 9px;
 }
 
-.folder:hover {
+a.folder:hover {
   text-decoration: none;
   color: #0f731c;
 }
@@ -59,20 +59,17 @@ a {
 
 .addIcon {
   float: left;
+  margin-left: 17px;
   text-align: center;
   background: url(../img/plus.png);
 }
 
-.addIcon2 {
-  margin-left: 13px;
-}
-
-.addIcon:hover {
+.addIcon:hover, .refreshIcon:hover, .searchIcon:hover, .homeIcon:hover {
   font-weight: bold;
   text-decoration: none;
 }
 
-.addIcon > span {
+.addIcon > span, .refreshIcon > span, .searchIcon > span, .homeIcon > span {
   font-family: 'Segoe UI';
   text-transform: uppercase;
   color: Black;
@@ -86,12 +83,38 @@ a {
   display: none;
 }
 
-.currentDir {
+.backIcon {
+  background: url(../img/left_arrow.png);
+  margin-bottom: 7px;
+}
+
+.homeIcon {
+  float: left;
+  text-align: center;
+  background: url(../img/home.png);
+}
+
+.refreshIcon {
+  float: left;
+  text-align: center;
+  background: url(../img/refresh.png);
+  margin-left: 17px;
+}
+
+.searchIcon {
+  float: left;
+  text-align: center;
+  background: url(../img/search.png);
+  margin-left: 17px;
+}
+
+.currentDir, .searchResults {
   clear: both;
-  margin-top: 95px;
+  margin-top: 115px;
   font-family: 'Segoe UI';
   text-transform: lowercase;
   font-size: 1.2em;
+  display: none;
 }
 
 .treeview {
@@ -118,4 +141,12 @@ tr {
   text-transform: uppercase;
   font-weight: bold;
   font-size: 1.2em;
+}
+
+.errors p {
+  color: Red;
+  font-family: 'Segoe UI';
+  text-transform: lowercase;
+  font-size: 1.1em;
+  margin-bottom: 15px;
 }

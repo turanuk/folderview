@@ -1,14 +1,19 @@
 ﻿@{
   Layout = null;
-  var path = Request["path"];
+  var keyword = Request["keyword"];
+  if (keyword == null) {
+    keyword = "*";
+  } else {
+    keyword = "*" + keyword + "*";
+  }
   var items = new List<FolderItem>();
-  var dir = new DirectoryInfo(Server.MapPath("~/TargetFolder" + path));
-  var folders = dir.GetDirectories();
+  var dir = new DirectoryInfo(Server.MapPath("~/TargetFolder"));
+  var folders = dir.GetDirectories(keyword, SearchOption.AllDirectories);
   foreach (var folder in folders) {
     var tempFolder = new FolderItem(folder.Name, "folder");
     items.Add(tempFolder);
   }
-  var files = dir.GetFiles();
+  var files = dir.GetFiles(keyword, SearchOption.AllDirectories);
   foreach (var file in files) {
     var tempFile = new FolderItem(file.Name, "file");
     items.Add(tempFile);

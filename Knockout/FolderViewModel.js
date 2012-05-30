@@ -1,11 +1,12 @@
 /// <reference path='../Scripts/knockout-2.1.0.js'/>
 
-var FolderViewModel = function (folderInput, fileInput) {
+var FolderViewModel = function (folderInput, fileInput, directory) {
   var self = this;
   self.folders = ko.observableArray(folderInput);
   self.files = ko.observableArray(fileInput);
   //Holds the current directory that you are viewing
-  self.directory = ko.observable('');
+  self.directory = ko.observable(directory);
+  self.keyword = ko.observable('');
   self.error = ko.observable('');
 
   self.displaydirectory = ko.computed(function() {
@@ -17,20 +18,8 @@ var FolderViewModel = function (folderInput, fileInput) {
   });
 
   self.directory.subscribe(function (newValue) {
-    self.error('');
-    $.getJSON('/endpoints/getlisting', { path: newValue }, function (data) {
-      var folders = new Array();
-      var files = new Array();
-      $.each(data, function(index, value) {
-        if (value.ItemType === 'folder') {
-          folders.push(value);
-        } else if (value.ItemType === 'file') {
-          files.push(value);
-        }
-      });
-      self.folders(folders);
-      self.files(files);
-    });
+    localStorage.directory = newValue;
+    self.refreshListing(newValue);
   });
 
   self.deleteItem = function (item) {
@@ -53,6 +42,8 @@ var FolderViewModel = function (folderInput, fileInput) {
         self.folders.push(JSON.parse(data));
       } else if (type === 'file') {
         self.files.push(JSON.parse(data));
+      } else if (type === 'search') {
+        alert('run search');
       }
     }).error(function() {
       self.error('There was an error creating the file or folder. Do you already have one that is the same name?');
@@ -72,10 +63,63 @@ var FolderViewModel = function (folderInput, fileInput) {
     var newDirValue = oldDirValue + '\\' + item.ItemName;
     self.directory(newDirValue);
   }
+
+  self.search = function (key) {
+    self.error('');
+    self.keyword(key);
+    $.getJSON('/endpoints/search', { keyword: key }, function (data) {
+      var folders = new Array();
+      var files = new Array();
+      $.each(data, function(index, value) {
+        if (value.ItemType === 'folder') {
+          folders.push(value);
+        } else if (value.ItemType === 'file') {
+          files.push(value);
+        }
+      });
+      self.folders(folders);
+      self.files(files);
+    });
+  }
+
+  self.backToView = function () {
+    self.error('');
+    self.keyword('');
+    self.refreshListing(self.directory());
+  }
+
+  self.refresh = function () {
+    self.refreshListing(self.directory());
+  }
+
+  self.home = function() {
+    self.directory('');
+  }
+
+  self.refreshListing = function (path) {
+    self.error('');
+    $.getJSON('/endpoints/getlisting', { path: path }, function (data) {
+      var folders = new Array();
+      var files = new Array();
+      $.each(data, function(index, value) {
+        if (value.ItemType === 'folder') {
+          folders.push(value);
+        } else if (value.ItemType === 'file') {
+          files.push(value);
+        }
+      });
+      self.folders(folders);
+      self.files(files);
+    });
+  }
 }
 
 $(function () {
-  $.getJSON('/endpoints/getlisting', function (data) {
+  var directory = '';
+  if (localStorage.directory) {
+    directory = localStorage.directory;
+  }
+  $.getJSON('/endpoints/getlisting', { path: directory }, function (data) {
     var folders = new Array();
     var files = new Array();
     $.each(data, function(index, value) {
@@ -85,6 +129,6 @@ $(function () {
         files.push(value);
       }
     });
-    ko.applyBindings(new FolderViewModel(folders, files));
+    ko.applyBindings(new FolderViewModel(folders, files, directory));
   });
 });
