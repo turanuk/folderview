@@ -135,5 +135,7 @@ $(function () {
       }
     });
     ko.applyBindings(new FolderViewModel(folders, files, directory));
+  }).error(function() {
+    ko.applyBindings(new FolderViewModel(new Array(), new Array(), ''));
   });
 });
