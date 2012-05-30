@@ -94,10 +94,11 @@ var FolderViewModel = function (folderInput, fileInput, directory) {
 
   self.home = function() {
     self.keyword('');
+    localStorage.directory = '';
     if (self.directory() === '') {
       self.refreshListing('');
     }
-    self.directory('');  
+    self.directory('');
   }
 
   self.refreshListing = function (path) {
