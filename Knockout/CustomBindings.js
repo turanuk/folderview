@@ -33,6 +33,11 @@ ko.bindingHandlers.inputPrompt = {
     var type = allBindingsAccessor().type;
     $(element).click(function () {
       $('#' + type + 'InputName').val('');
+      $('#' + type + 'InputName').keypress(function(event) {
+        if (event.which === 13) {
+          $('.ui-button-text:contains("Add")').click();
+        }
+      });
       $('.dialog-form-' + type).dialog({
         height: 200,
         modal: true,
