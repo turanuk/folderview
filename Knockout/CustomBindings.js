@@ -63,6 +63,11 @@ ko.bindingHandlers.searchPrompt = {
     var viewModel = valueAccessor();
     $(element).click(function () {
       $('#keywordInputName').val('');
+      $('#keywordInputName').keypress(function(event) {
+        if (event.which === 13) {
+          $('.ui-button-text:contains("Search")').click();
+        }
+      });
       $('.dialog-form-search').dialog({
         height: 200,
         modal: true,
